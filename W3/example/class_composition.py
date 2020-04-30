@@ -1,19 +1,28 @@
+import json
+  
 class PetExport:
     def export(self, dog):
         raise NotImplementedError
 
-class ExportJSON(Pet):
+class ExportJSON(PetExport):
     def export(self, dog):
-        pass
+        return json.dumps({
+            "name": dog.name,
+            "breed": dog.breed,
+        })
 
-class ExportXML(Pet):
+class ExportXML(PetExport):
     def export(self, dog):
-        pass
+        return """<?xml version="1.0" encoding="utf-8"?>
+                <dog>
+                    <name>{0}</name>
+                    <breed>{1}</breed>
+                </dog>
+                """.format(dog.name, dog.breed)
 
 class Pet:
     def __init__(self, name):
         self.name = name
-
 
 class Dog(Pet):
     def __init__(self, name, breed=None):
@@ -23,7 +32,17 @@ class Dog(Pet):
 class ExDog(Dog):
     def __init__(self, name, breed=None, exporter=None):
         super().__init__(name, breed=None)
-        self._exporter = exporter
+        self._exporter = exporter or ExportJSON()
+        if not isinstance(self._exporter, PetExport):
+            raise ValueError("bad exporter", exporter)
 
     def export(self):
         return self._exporter.export(self)
+        
+
+dog = ExDog("Шарик", "Дворняга", exporter=ExportXML())
+print(dog.export())
+
+dog = ExDog("Тузик", "Мопс")
+print(dog.export())
+
