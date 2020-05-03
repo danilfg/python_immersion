@@ -1,5 +1,6 @@
 import csv
 import os
+import sys
 
 ext_list = [".jpg", ".jpeg", ".png", ".gif"]
 
@@ -56,3 +57,15 @@ def get_car_list(csv_filename):
                 pass
 
     return car_list
+
+
+def _main():
+    path = sys.argv[1]
+    cars = get_car_list(path)
+    print(len(cars))
+    for car in cars:
+        print(car)
+
+
+if __name__ == "__main__":
+    _main()
