@@ -1,13 +1,31 @@
-class FileReader:
+import csv
 
-    def __init__(self, path_file="example.txt"):
-        self.path_file = path_file
+with open(csv_filename) as csv_fd:
+    reader = csv.reader(csv_fd, delimiter=';')
+    next(reader)  # пропускаем заголовок
+    for row in reader:
+        print(row)
 
-    def read(self):
-        try:
-            with open(self.path_file) as f:
-                content = f.read()
-                return content
+class CarBase:
+    def __init__(self, brand, photo_file_name, carrying):
+        pass
 
-        except FileNotFoundError:
-            return ""
+
+class Car(CarBase):
+    def __init__(self, brand, photo_file_name, carrying, passenger_seats_count):
+        pass
+
+
+class Truck(CarBase):
+    def __init__(self, brand, photo_file_name, carrying, body_whl):
+        pass
+
+
+class SpecMachine(CarBase):
+    def __init__(self, brand, photo_file_name, carrying, extra):
+        pass
+
+
+def get_car_list(csv_filename):
+    car_list = []
+    return car_list
