@@ -53,7 +53,7 @@ def get_car_list(csv_filename):
                     car_list.append(Truck(row[0], row[1], row[5], row[3], row[4]))
                 if row[0] == "spec_machine":
                     car_list.append(SpecMachine(row[0], row[1], row[5], row[3], row[6]))
-            except:
+            except TypeError:
                 pass
 
     return car_list
